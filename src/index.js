@@ -1,27 +1,18 @@
 Date.prototype.format = function (fmt = 'yyyy-MM-dd hh:mm:ss') {
     let info = {}
     info.yyyy = this.getFullYear()
-    info.Y = info.yyyy.toString().substr(-2)
-    info.M = this.getMonth() + 1
-    info.d = this.getDate()
-    info.h = this.getHours()
-    info.m = this.getMinutes()
-    info.s = this.getSeconds()
+    info.YY = info.yyyy.toString().substr(-2)
+    info.MM = this.getMonth() + 1
+    info.dd = this.getDate()
+    info.hh = this.getHours()
+    info.mm = this.getMinutes()
+    info.ss = this.getSeconds()
     info.ms = this.getMilliseconds()
-
-    let res = fmt.replace(/\w+/g, match => {
-        // match is a String
-        if (match.length === 2 && match[0] === match[1] && match[0] in info) {
-            match = match[0]
-            return info[match] - 9 > 0 ? info[match] : '0' + info[match]
-        }
-        if (match in info) {
-            return info[match]
-        } else {
-            return match
-        }
-    })
-    return res
+    for (let x in info) {
+        let v = (info[x] - 9) > 0 ? info[x] : '0' + info[x] * 1
+        fmt = fmt.replace(x, v)
+    }
+    return fmt
 }
 
 Date.prototype.addStr = function (str) {
@@ -72,4 +63,4 @@ Date.prototype.addStr = function (str) {
     return this
 }
 
-export default {}
+// export default {}
